@@ -24,7 +24,8 @@ Bilješke sa predavanja.
 Profesorove prezentacije iz predmeta.
 
 ### [Vježbe](./Vjezbe)
-Kod i primjeri sa vježbi.
+Primjeri i fajlovi sa vježbi.
+Također su dodane skripte koje u Cloonix-u naprave mrežu kakva treba biti kada se vježba pravilno odradi.
 
 
 # Skripte i rješenja problema
