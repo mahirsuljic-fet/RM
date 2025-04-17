@@ -91,7 +91,6 @@ sleep 5
 
 cloonix_ssh nemo router "echo \"listen-address=127.0.0.1,10.0.1.1,10.0.2.1
 dhcp-range=eth0,10.0.1.50,10.0.1.150,12h
-dhcp-range=eth1,10.0.2.50,10.0.2.150,12h
 domain=foo.lan\" > /etc/dnsmasq.conf"
 
 sleep 3
