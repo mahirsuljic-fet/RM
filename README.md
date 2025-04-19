@@ -5,6 +5,7 @@
   - [Knjige](#knjige)
   - [Materijal sa fakulteta](#FET)
 - [Skripte i rješenja problema](#skripte-i-rješenja-problema)
+- [YouTube](#youtube)
 
 # Materijal za učenje
 
@@ -26,6 +27,15 @@ Profesorove prezentacije iz predmeta.
 ### [Vježbe](./Vjezbe)
 Primjeri i fajlovi sa vježbi.
 Također su dodane skripte koje u Cloonix-u naprave mrežu kakva treba biti kada se vježba pravilno odradi.
+
+
+## YouTube
+
+### DNS
+- [DNS Explained in 100 Seconds](https://www.youtube.com/watch?v=UVR9lhUGAyU)
+- [How a DNS Server (Domain Name System) works.](https://www.youtube.com/watch?v=mpQZVYPuDGU)
+- [How DNS Works - Computerphile](https://www.youtube.com/watch?v=uOfonONtIuk)
+- [What is DNS?](https://www.youtube.com/watch?v=NiQTs9DbtW4)
 
 
 # Skripte i rješenja problema
