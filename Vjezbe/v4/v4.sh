@@ -21,6 +21,15 @@ create_host() {
   cloonix_cli $NAME add kvm $name $KVM_MEM $KVM_CPU $KVM_ETH $KVM_WLAN ${VM_NAME}.qcow2 & 
 }
 
+disable_bloat() {
+  name=$1
+  cloonix_ssh $NAME $name "sysctl -w net.ipv6.conf.all.disable_ipv6=1" 2>/dev/null
+  cloonix_ssh $NAME $name "sysctl -w net.ipv6.conf.default.disable_ipv6=1" 2>/dev/null
+  cloonix_ssh $NAME $name "hostnamectl set-hostname $name" 2>/dev/null
+  cloonix_ssh $NAME $name "sysctl net.ipv4.tcp_timestamps=0" 2>/dev/null
+  cloonix_ssh $NAME $name "systemctl stop systemd-timesyncd" 2>/dev/null
+}
+
 setup_host() {
   name=$1
   ip_addr=$2
@@ -28,11 +37,7 @@ setup_host() {
   cloonix_ssh $NAME $name "ip addr add dev eth0 $ip_addr" 2>/dev/null
   cloonix_ssh $NAME $name "ip link set dev eth0 up" 2>/dev/null
   cloonix_ssh $NAME $name "ip route add default via $default_gateway" 2>/dev/null
-  cloonix_ssh $NAME $name "sysctl -w net.ipv6.conf.all.disable_ipv6=1" 2>/dev/null
-  cloonix_ssh $NAME $name "sysctl -w net.ipv6.conf.default.disable_ipv6=1" 2>/dev/null
-  cloonix_ssh $NAME $name "hostnamectl set-hostname $name" 2>/dev/null
-  cloonix_ssh $NAME $name "sysctl net.ipv4.tcp_timestamps=0" 2>/dev/null
-  cloonix_ssh $NAME $name "systemctl stop systemd-timesyncd" 2>/dev/null
+  disable_bloat $name
 }
 
 set_interface() {
@@ -60,6 +65,7 @@ setup_router_2() {
   ip_addr1=$3
   set_interface $name $ip_addr0 0
   set_interface $name $ip_addr1 1
+  disable_bloat $name
   enable_routing $name
 }
 
@@ -71,6 +77,7 @@ setup_router_3() {
   set_interface $name $ip_addr0 0
   set_interface $name $ip_addr1 1
   set_interface $name $ip_addr2 2
+  disable_bloat $name
   enable_routing $name
 }
 
