@@ -25,8 +25,6 @@ profile_name=cloonix
 bundle_file1=install_cloonix
 bundle_file2=server.tar.gz
 bundle_file3=common.tar.gz
-openwrt=openwrt.qcow2
-stretch=stretch.qcow2
 
 # paths
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
@@ -40,7 +38,6 @@ cloonix_url_root=http://clownix.net/downloads/cloonix-$v_major
 cloonix_url=$cloonix_url_root/$cloonix
 bookworm_tar_url=$cloonix_url_root/bulk/$bookworm_tar
 zipfrr_url=$cloonix_url_root/bulk/$zipfrr
-bulk_url=https://gitlab.com/amer.hasanovic/fet_net/-/raw/master/$bulk
 
 # apparmor profile
 profile_data=\
@@ -85,12 +82,6 @@ fi
 if [ ! -f $cloonix_source_path/$zipfrr  ]; then
   echo -e "${green}Downloading zipfrr...${white}"
   wget $zipfrr_url
-fi
-
-# bulk
-if [ ! -f $cloonix_source_path/$bulk ]; then
-  echo -e "${green}Downloading bulk...${white}"
-  wget $bulk_url
 fi
 
 # gzip
@@ -140,33 +131,14 @@ if [ $install = true ]; then
     gunzip -k $bookworm_tar
   fi
   
-  if [ ! -f $bulk_path/$openwrt ] ||
-     [ ! -f $bulk_path/$stretch ]; then
-    echo -e "${green}Extracting bulk...${white}"
-    tar -xzvf $bulk > /dev/null
-  fi
-
   echo -e "${green}Installing cloonix...${white}"
 
   cd $cloonix_source_path/$bundle
   sudo ./install_cloonix > /dev/null
   cd $cloonix_source_path
 
-  echo -e "${green}Moving bulk files...${white}"
-  if [ ! -d $cloonix_bulk_path ]; then
-    mkdir -p $cloonix_bulk_path
-  fi
-
   if [ ! -f $cloonix_bulk_path/$bookworm ]; then
     sudo mv $cloonix_source_path/$bookworm $cloonix_bulk_path
-  fi
-
-  if [ ! -f $cloonix_bulk_path/$openwrt ]; then
-    sudo mv $bulk_path/$openwrt $cloonix_bulk_path
-  fi
-
-  if [ ! -f $cloonix_bulk_path/$stretch ]; then
-    sudo mv $bulk_path/$stretch $cloonix_bulk_path
   fi
 fi
 
