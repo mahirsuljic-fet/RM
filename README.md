@@ -40,6 +40,51 @@ Također su dodane skripte koje u Cloonix-u naprave mrežu kakva treba biti kada
 
 # Skripte i rješenja problema
 
+### Komande za otvoranje sniffera sa imenom
+Komanda (bash funkcija) `open_cloonix_pcap` koja se inače koristi na vježbama ima par nedostataka.
+Kada se otvori jedan Wireshark, da bi se otvorio sljedeći mora se koristiti `CTRL + z`, `bg` i slično.
+Dalje, teško je razlikovati Wireshark-e kada ih ima više otvorenih, u svim instancama naziv prozora je isti.
+
+Zbog toga sam napravio naredne dvije funkcije koje možete dodati u svoj `~/.bashrc` i zatim koristiti.
+
+Funkcija `open_pcap` radi na isti način kao i `open_cloonix_pcap`, ali popravlja navedene nedostatke.
+Nije potrebno koristiti `CTRL + z` i slično, iako može tako izgledati zbog Wireshark outputa u terminalu.
+Možete jednostavno odma pisati komande ili eventualno pomoću `CTRL + c` vratiti cursor ili pomoću `CTRL + l` očistiti ekran.
+Na vrhu Wireshark prozora ce pisati ime sniffera za koji je on otvoren.
+```bash
+open_pcap ()
+{
+  pipe_path=/tmp
+  sniffer=$(find /opt1/cloonix_data -name "*.pcap" | fzy)
+  name=$(echo "$sniffer" | sed -e "s/.*\/\(.*\)\..*/\1/")
+  pipe=$pipe_path/$name
+  [ ! -f $pipe ] && mkfifo $pipe
+  tail -f -c +0 "$sniffer" >> $pipe &
+  wireshark-gtk -k -i $pipe &
+}
+```
+
+Funkcija `open_sniffers` otvora sve sniffere koji su upaljeni od početka simulacije.
+```bash
+open_sniffers ()
+{
+  pipe_path=/tmp
+  sniffers=$(find /opt1/cloonix_data -name "*.pcap")
+
+  for s in $sniffers; do
+    name=$(echo "$s" | sed -e "s/.*\/\(.*\)\..*/\1/")
+    pipe=$pipe_path/$name
+    [ ! -f $pipe ] && mkfifo $pipe
+    tail -f -c +0 "$s" >> $pipe &
+    wireshark-gtk -k -i $pipe &
+  done
+}
+```
+
+*Dodatna napomena*: \
+Ako želite očistiti Wireshark output možete isključiti pa ponovo uključiti sniffer i ponovo upaliti Wireshark.
+
+
 ### Problem sa Cloonix-om - ne otvora se GUI
 Prije pokretanja Docker okruženja (`sudo start_container`) potrebno je izvršiti komandu `xhost +`.
 
