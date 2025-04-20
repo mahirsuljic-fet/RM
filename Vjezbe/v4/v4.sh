@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 NAME=nemo
 VM_NAME=stretch
@@ -169,6 +169,6 @@ cloonix_ssh $NAME main_router "ip route add 120.0.0.0/8 via 40.0.0.1 dev eth2" 2
 #######################################################################
 
 green='\033[1;92m'
-white='\033[0m'
+reset='\033[0m'
 
-echo -e "${green}Done${white}"
+echo -e "${green}Done${reset}"

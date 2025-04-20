@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 KVM_MEM=300
 KVM_CPU=2
@@ -73,6 +73,6 @@ done
 #----------------------------------------------------------------------
 
 green='\033[1;92m'
-white='\033[0m'
+reset='\033[0m'
 
-echo -e "${green}Done${white}"
+echo -e "${green}Done${reset}"
