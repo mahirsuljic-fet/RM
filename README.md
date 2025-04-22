@@ -92,6 +92,7 @@ open_sniffers ()
 *Dodatna napomena*: \
 Ako želite očistiti Wireshark output možete isključiti pa ponovo uključiti sniffer i ponovo upaliti Wireshark.
 
+---
 </details>
 
 
@@ -188,6 +189,7 @@ Tako da možemo upravo to i uraditi tako što napravimo novi fajl `cloonix_net` 
 
 </details>
 
+---
 </details>
 
 <details>
@@ -196,6 +198,7 @@ Tako da možemo upravo to i uraditi tako što napravimo novi fajl `cloonix_net` 
 
 Prije pokretanja Docker okruženja (`sudo start_container`) potrebno je izvršiti komandu `xhost local:$USER`.
 
+---
 </details>
 
 
@@ -223,4 +226,5 @@ sudo rm -rf /var/lib/cloonix
 **Napomena** \
 Koristiti default virtuelnu mašinu (*bookworm*).
 
+---
 </details>
