@@ -85,6 +85,86 @@ open_sniffers ()
 Ako želite očistiti Wireshark output možete isključiti pa ponovo uključiti sniffer i ponovo upaliti Wireshark.
 
 
+### Konfiguracija Cloonix KVM terminala
+Kolega **Irmel Haskić** je našao način da se poveća font u terminalu od KVM uređaja i napisao sljedeću skriptu:
+``` bash
+#!/bin/bash
+
+cat > "$HOME/urxvt_font_setup" <<EOF
+URxvt.font: xft:Monospace:size=14
+URxvt.foreground: #eeeeec
+URxvt.background: #300a24
+EOF
+
+if ! grep -q "cloonix_net()" "$HOME/.bashrc"; then
+  cat << 'EOF' >> "$HOME/.bashrc"
+cloonix_net() {
+  xrdb -merge "$HOME/urxvt_font_setup"
+  command cloonix_net "$@"
+}
+EOF
+fi
+
+source "$HOME/.bashrc"
+```
+
+Skripta radi ok, ali ima problema kada se `cloonix_net` pokreće pomoću skripti (npr. [routing.sh](./Vjezbe/v3/routing.sh)).
+
+Slijedi rješenje koje sam smislio, a ako nekog zanima, nakon rješenja je objašnjenje zašto prvobitna skripta ne radi i kako i zašto radi novo rješenje.
+
+Napisao sam skriptu [`setup_cloonix_conf.sh`](./setup_cloonix_conf.sh) koja radi sve što treba za novo rješenje.
+Unutar skripte možete promijeniti naziv i path do fajla u koji želite pisati konfiguraciju.
+
+##### Novije rješenje
+Ovo rješenje čita konfiguracijske podatke iz fajla `~/.cloonix_conf`.
+Potrebno je ove dvije linije koda unutar funkcije `cloonix_net` iz orginalne skripte upisati u fajl `~/.local/bin/cloonix_net` uz neke izmjene:
+``` bash
+xrdb -merge $HOME/.cloonix_conf
+. /usr/local/bin/cloonix_net "$@"
+```
+Ovom fajlu je potrebno dati executable permisije pomoću `chmox +x ~/.local/bin/cloonix_net`.
+
+Unutar fajla `.cloonix_conf` je potrebno dodati konfiguracijske podatke kao npr.:
+```
+urxvt.font: xft:Monospace:size=14
+urxvt.foreground: #eeeeee
+urxvt.background: #222222
+```
+
+Font se mijenja u formatu `xft:IME_FONTA:size=VELICINA`.
+Ako želite neki drugi font, možete unutar KVM terminala izvrsiti komandu `fc-list` koja će ispisati instalirane fontove.
+`foreground` je boja slova, a `background` je boja pozadine, u hex RGB formatu 
+(prve dvije hex cifre su nivo crvene boje, druge dvije nivo zelene i zadnje dvije nivo plave boje).
+
+Možete također napraviti providnu pozadinu pomoću rgba (red-green-blue-alpha) formata kao:
+```
+urxvt.font: xft:Monospace:size=14
+urxvt.foreground: #eeeeee
+urxvt.depth: 32
+urxvt.background: rgba:0000/0000/2222/cccc
+```
+
+Prvi dio je ponovo za crvenu boju, drugi za zelenu, treći za plavu i četvrti dio predstavlja providnost gdje je `0000` skroz providno, a `ffff` nikako providno.
+Potrebno je također dodati `depth` parametar.
+
+##### Opis novijeg rješenja
+Prvobitno rješenje ne radi zato jer bash skripte ne vide funkcije definisane u `~/.bashrc`.
+Ovo se naivno može riješiti na dva načina.
+Prvi je da se unutar svake skripte definise funkcija `cloonix_net` (copy-paste),
+a drugi je da se unutar svake skripte source-a `~/.bashrc`.
+Međutim, ovo bi morali uraditi za svaku skriptu, što je realno previše posla.
+
+Rješenje koje sam smislio iskoristava način na koji bash traži executable fajlove.
+Kada napišemo nesto u terminalu, bash pretražuje `$PATH` varijablu za lokacije gdje bi se taj fajl 
+(npr. `ls` je executable fajl `/usr/bin/ls`) mogao nalaziti, i to prioritet imaju putanje koje su na početku PATH-a. 
+Jedna od putanja u `$PATH` je `/home/$USER/.local/bin`. 
+Ova putanja je lokalna (dio korisnikovih fajlova, ne utiče na cijeli sistem), unutar skrivene `.local` direktorije (tako da ne smeta) i najbitnije dio je `$PATH`-a od okruženja.
+
+Dakle, ako unutar `/home/$USER/.local/bin` (naše putanje) napravimo executable fajl sa imenom `cloonix_net`, 
+on će se izvrsiti prije "običnog" `cloonix_net`-a koji se nalazi u `/usr/local/bin/` jer se ta putanja nalazi posle naše u `$PATH`. 
+Tako da možemo upravo to i uraditi tako što napravimo novi fajl `cloonix_net` u našoj putanji i dadnemo mu executable permisije pomoću `chmod` (ne radi bez permisija).
+
+
 ### Problem sa Cloonix-om - ne otvora se GUI
 Prije pokretanja Docker okruženja (`sudo start_container`) potrebno je izvršiti komandu `xhost local:$USER`.
 
