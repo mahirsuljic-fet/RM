@@ -9,7 +9,7 @@
 
 <details>
 
-<summary>Materijal za učenje</summary>
+<summary><h1>Materijal za učenje</h1></summary>
 
 # Materijal za učenje
 
@@ -22,7 +22,7 @@
 
 ## FET
 
-### [**Predavanja**](./Predavanja)
+### [Predavanja](./Predavanja)
 Bilješke sa predavanja.
 
 ### [Prezentacije](./Prezentacije)
@@ -49,7 +49,7 @@ Također su dodane skripte koje u Cloonix-u naprave mrežu kakva treba biti kada
 <summary><h1>Skripte i rješenja problema</h1></summary>
 
 <details>
-<summary>Komande za otvoranje sniffera sa imenom</summary>
+<summary><h2>Komande za otvoranje sniffera sa imenom<h2></summary>
 
 Komanda (bash funkcija) `open_cloonix_pcap` koja se inače koristi na vježbama ima par nedostataka.
 Kada se otvori jedan Wireshark, da bi se otvorio sljedeći mora se koristiti `CTRL + z`, `bg` i slično.
@@ -99,11 +99,11 @@ Ako želite očistiti Wireshark output možete isključiti pa ponovo uključiti 
 
 
 <details>
-<summary>Konfiguracija Cloonix KVM terminala</summary>
+<summary><h2>Konfiguracija Cloonix KVM terminala</h2></summary>
 
 Kolega **Irmel Haskić** je našao način da se poveća font u terminalu od KVM uređaja i napisao sljedeću skriptu:
 <details>
-<summary>Skripta - Irmel Haskić</summary>
+<summary><h3>Skripta - Irmel Haskić</h3></summary>
 
 ``` bash
 #!/bin/bash
@@ -135,7 +135,7 @@ Napisao sam skriptu [`setup_cloonix_conf.sh`](./setup_cloonix_conf.sh) koja radi
 Unutar skripte možete promijeniti naziv i path do fajla u koji želite pisati konfiguraciju.
 
 <details>
-<summary>Novije rješenje</summary>
+<summary><h3>Novije rješenje</h3></summary>
 <br>
 
 Ovo rješenje čita konfiguracijske podatke iz fajla `~/.cloonix_conf`.
@@ -173,7 +173,7 @@ Potrebno je također dodati `depth` parametar.
 </details>
 
 <details>
-<summary>Opis novijeg rješenja</summary>
+<summary><h3>Opis novijeg rješenja</h3></summary>
 <br>
 
 Prvobitno rješenje ne radi zato jer bash skripte ne vide funkcije definisane u `~/.bashrc`.
@@ -200,7 +200,7 @@ Tako da možemo upravo to i uraditi tako što napravimo novi fajl `cloonix_net` 
 
 <details>
 
-<summary>Problem sa Cloonix-om - ne otvora se GUI</summary>
+<summary><h2>Problem sa Cloonix-om - ne otvora se GUI</h2></summary>
 <br>
 
 Prije pokretanja Docker okruženja (`sudo start_container`) potrebno je izvršiti komandu `xhost local:$USER`.
@@ -210,7 +210,7 @@ Prije pokretanja Docker okruženja (`sudo start_container`) potrebno je izvršit
 
 
 <details>
-<summary>Skripta za instalaciju Cloonix-a izvan Docker okruženja</summary>
+<summary><h2>Skripta za instalaciju Cloonix-a izvan Docker okruženja</h2></summary>
 <br>
 
 **KORISNO SAMO ZA PRVE VJEŽBE**
