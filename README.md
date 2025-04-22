@@ -106,7 +106,7 @@ U dijelu *Novije rješenje* je objašnjena konfiguracija terminala.
 
 Kolega **Irmel Haskić** je našao način da se poveća font u terminalu od KVM uređaja i napisao sljedeću skriptu:
 <details>
-<summary><h3>Skripta - Irmel Haskić</h3></summary>
+<summary><h4>Skripta - Irmel Haskić</h4></summary>
 
 ``` bash
 #!/bin/bash
