@@ -11,13 +11,11 @@
 
 <summary><h1>Materijal za učenje</h1></summary>
 
-# Materijal za učenje
-
 ## [Knjige](./Literatura/)
-- [Computer Networks - Andrew S. Tanenbaum, 5th Edition](./Literatura/Computer Networks - 5th edition.pdf)
-- [Computer Networks, a systems approach - Larry L. Peterson, 4th Edition](./Literatura/Computer Networks a systems approach - 4th edition.pdf)
-- [Computer Networks, a systems approach - Larry L. Peterson, 5th Edition](./Literatura/Computer Networks a systems approach - 5th edition.pdf)
-- [Computer Networks, a top down approach - James F. Kurose, 7th Edition](./Literatura/Computer Networking a top down approach - 7th edition.pdf)
+- [Computer Networks - Andrew S. Tanenbaum, 5th Edition](./Literatura/Computer_Networks_-_5th_edition.pdf)
+- [Computer Networks, a systems approach - Larry L. Peterson, 4th Edition](./Literatura/Computer_Networks_a_systems_approach_-_4th_edition.pdf)
+- [Computer Networks, a systems approach - Larry L. Peterson, 5th Edition](./Literatura/Computer_Networks_a_systems_approach_-_5th_edition.pdf)
+- [Computer Networks, a top down approach - James F. Kurose, 7th Edition](./Literatura/Computer_Networking_a_top_down_approach_-_7th_edition.pdf)
 
 
 ## FET
@@ -136,7 +134,6 @@ Unutar skripte možete promijeniti naziv i path do fajla u koji želite pisati k
 
 <details>
 <summary><h3>Novije rješenje</h3></summary>
-<br>
 
 Ovo rješenje čita konfiguracijske podatke iz fajla `~/.cloonix_conf`.
 Potrebno je ove dvije linije koda unutar funkcije `cloonix_net` iz orginalne skripte upisati u fajl `~/.local/bin/cloonix_net` uz neke izmjene:
@@ -174,7 +171,6 @@ Potrebno je također dodati `depth` parametar.
 
 <details>
 <summary><h3>Opis novijeg rješenja</h3></summary>
-<br>
 
 Prvobitno rješenje ne radi zato jer bash skripte ne vide funkcije definisane u `~/.bashrc`.
 Ovo se naivno može riješiti na dva načina.
@@ -201,7 +197,6 @@ Tako da možemo upravo to i uraditi tako što napravimo novi fajl `cloonix_net` 
 <details>
 
 <summary><h2>Problem sa Cloonix-om - ne otvora se GUI</h2></summary>
-<br>
 
 Prije pokretanja Docker okruženja (`sudo start_container`) potrebno je izvršiti komandu `xhost local:$USER`.
 
@@ -211,7 +206,6 @@ Prije pokretanja Docker okruženja (`sudo start_container`) potrebno je izvršit
 
 <details>
 <summary><h2>Skripta za instalaciju Cloonix-a izvan Docker okruženja</h2></summary>
-<br>
 
 **KORISNO SAMO ZA PRVE VJEŽBE**
 
