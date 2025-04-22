@@ -99,6 +99,11 @@ Ako želite očistiti Wireshark output možete isključiti pa ponovo uključiti 
 <details>
 <summary><h2>Konfiguracija Cloonix KVM terminala</h2></summary>
 
+Ispostavilo se da ništa od ovog ispod nije potrebno, ali ću ostaviti ako nekog bude zanimalo ili najnovije rješenje ne bude radilo.
+Sve što treba je da se napravi fajl `.Xdefaults` u `$HOME` (tj. `~/.Xdefaults`) i unutar njega upiše konfiguracija terminala.
+U dijelu *Novije rješenje* je objašnjena konfiguracija terminala.
+
+
 Kolega **Irmel Haskić** je našao način da se poveća font u terminalu od KVM uređaja i napisao sljedeću skriptu:
 <details>
 <summary><h3>Skripta - Irmel Haskić</h3></summary>
@@ -127,7 +132,10 @@ source "$HOME/.bashrc"
 
 Skripta radi ok, ali ima problema kada se `cloonix_net` pokreće pomoću skripti (npr. [routing.sh](./Vjezbe/v3/routing.sh)).
 
-Slijedi **novije rješenje** koje sam smislio, a ako nekog zanima, nakon rješenja je objašnjenje zašto prvobitna skripta ne radi i kako i zašto radi novo rješenje.
+Slijedi novije rješenje koje sam smislio, a ako nekog zanima, nakon rješenja je objašnjenje zašto prvobitna skripta ne radi i kako i zašto radi novo rješenje.
+
+***Još jednom napominjem, nije potrebna nikakva skripta, ovo sam ostavio jer sam već ispisao i žao mi je izbrisati :)*** \
+***Sve što je potrebno je da se ispod objašnjena konfiguracija upiše u `~/.Xdefaults`.***
 
 Napisao sam skriptu [`setup_cloonix_conf.sh`](./setup_cloonix_conf.sh) koja radi sve što treba za novo rješenje.
 Unutar skripte možete promijeniti naziv i path do fajla u koji želite pisati konfiguraciju.
@@ -143,7 +151,9 @@ xrdb -merge $HOME/.cloonix_conf
 ```
 Ovom fajlu je potrebno dati executable permisije pomoću `chmox +x ~/.local/bin/cloonix_net`.
 
-Unutar fajla `.cloonix_conf` je potrebno dodati konfiguracijske podatke kao npr.:
+***BITNI DIO ZA `~/.Xdefaults`:***
+
+Unutar fajla `.cloonix_conf` (odnosno `~/.Xdefaults`) je potrebno dodati konfiguracijske podatke kao npr.:
 ```
 urxvt.font: xft:Monospace:size=14
 urxvt.foreground: #eeeeee
