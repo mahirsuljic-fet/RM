@@ -4,8 +4,12 @@
 - [Materijal za učenje](#materijal-za-ucenje)
   - [Knjige](#knjige)
   - [Materijal sa fakulteta](#FET)
+  - [YouTube](#youtube)
 - [Skripte i rješenja problema](#skripte-i-rješenja-problema)
-- [YouTube](#youtube)
+
+<details>
+
+<summary>Materijal za učenje</summary>
 
 # Materijal za učenje
 
@@ -37,10 +41,18 @@ Također su dodane skripte koje u Cloonix-u naprave mrežu kakva treba biti kada
 - [How DNS Works - Computerphile](https://www.youtube.com/watch?v=uOfonONtIuk)
 - [What is DNS?](https://www.youtube.com/watch?v=NiQTs9DbtW4)
 
+</details>
+
+
+<details>
+
+<summary>Skripte i rješenja problema</summary>
 
 # Skripte i rješenja problema
 
-### Komande za otvoranje sniffera sa imenom
+<details>
+<summary>Komande za otvoranje sniffera sa imenom</summary>
+
 Komanda (bash funkcija) `open_cloonix_pcap` koja se inače koristi na vježbama ima par nedostataka.
 Kada se otvori jedan Wireshark, da bi se otvorio sljedeći mora se koristiti `CTRL + z`, `bg` i slično.
 Dalje, teško je razlikovati Wireshark-e kada ih ima više otvorenih, u svim instancama naziv prozora je isti.
@@ -84,8 +96,13 @@ open_sniffers ()
 *Dodatna napomena*: \
 Ako želite očistiti Wireshark output možete isključiti pa ponovo uključiti sniffer i ponovo upaliti Wireshark.
 
+---
+</details>
 
-### Konfiguracija Cloonix KVM terminala
+
+<details>
+<summary>Konfiguracija Cloonix KVM terminala</summary>
+
 Kolega **Irmel Haskić** je našao način da se poveća font u terminalu od KVM uređaja i napisao sljedeću skriptu:
 ``` bash
 #!/bin/bash
@@ -115,7 +132,10 @@ Slijedi rješenje koje sam smislio, a ako nekog zanima, nakon rješenja je obja�
 Napisao sam skriptu [`setup_cloonix_conf.sh`](./setup_cloonix_conf.sh) koja radi sve što treba za novo rješenje.
 Unutar skripte možete promijeniti naziv i path do fajla u koji želite pisati konfiguraciju.
 
-##### Novije rješenje
+<details>
+<summary>Novije rješenje</summary>
+<br>
+
 Ovo rješenje čita konfiguracijske podatke iz fajla `~/.cloonix_conf`.
 Potrebno je ove dvije linije koda unutar funkcije `cloonix_net` iz orginalne skripte upisati u fajl `~/.local/bin/cloonix_net` uz neke izmjene:
 ``` bash
@@ -147,7 +167,13 @@ urxvt.background: rgba:0000/0000/2222/cccc
 Prvi dio je ponovo za crvenu boju, drugi za zelenu, treći za plavu i četvrti dio predstavlja providnost gdje je `0000` skroz providno, a `ffff` nikako providno.
 Potrebno je također dodati `depth` parametar.
 
-##### Opis novijeg rješenja
+---
+</details>
+
+<details>
+<summary>Opis novijeg rješenja</summary>
+<br>
+
 Prvobitno rješenje ne radi zato jer bash skripte ne vide funkcije definisane u `~/.bashrc`.
 Ovo se naivno može riješiti na dva načina.
 Prvi je da se unutar svake skripte definise funkcija `cloonix_net` (copy-paste),
@@ -164,12 +190,30 @@ Dakle, ako unutar `/home/$USER/.local/bin` (naše putanje) napravimo executable 
 on će se izvrsiti prije "običnog" `cloonix_net`-a koji se nalazi u `/usr/local/bin/` jer se ta putanja nalazi posle naše u `$PATH`. 
 Tako da možemo upravo to i uraditi tako što napravimo novi fajl `cloonix_net` u našoj putanji i dadnemo mu executable permisije pomoću `chmod` (ne radi bez permisija).
 
+---
+</details>
 
-### Problem sa Cloonix-om - ne otvora se GUI
+---
+</details>
+
+<details>
+
+<summary>Problem sa Cloonix-om - ne otvora se GUI</summary>
+<br>
+
 Prije pokretanja Docker okruženja (`sudo start_container`) potrebno je izvršiti komandu `xhost local:$USER`.
 
-### [Skripta za instalaciju Cloonix-a izvan Docker okruženja](./cloonix_install.sh)
+---
+</details>
+
+
+<details>
+<summary>Skripta za instalaciju Cloonix-a izvan Docker okruženja</summary>
+<br>
+
 **KORISNO SAMO ZA PRVE VJEŽBE**
+
+[skripta](./cloonix_install.sh)
 
 Za pokretanje skripte potrebno je izvršiti komandu `. ./cloonix_install.sh` (ili samo `./cloonix_install.sh` ako direktno skinete) u direktoriji u kojoj se nalazi skripta.
 Skripta skine sve potrebne resurse, zatim ih odpakuje, instalira Cloonix, doda virtuelne mašine i apparmor profil.
@@ -186,4 +230,7 @@ sudo rm -rf /var/lib/cloonix
 ```
 
 **Napomena** \
-Koristiti default virtuelnu mašinu (*bookworm*)
+Koristiti default virtuelnu mašinu (*bookworm*).
+
+---
+</details>
