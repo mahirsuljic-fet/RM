@@ -46,9 +46,7 @@ Također su dodane skripte koje u Cloonix-u naprave mrežu kakva treba biti kada
 
 <details>
 
-<summary>Skripte i rješenja problema</summary>
-
-# Skripte i rješenja problema
+<summary><h1>Skripte i rješenja problema</h1></summary>
 
 <details>
 <summary>Komande za otvoranje sniffera sa imenom</summary>
@@ -104,6 +102,9 @@ Ako želite očistiti Wireshark output možete isključiti pa ponovo uključiti 
 <summary>Konfiguracija Cloonix KVM terminala</summary>
 
 Kolega **Irmel Haskić** je našao način da se poveća font u terminalu od KVM uređaja i napisao sljedeću skriptu:
+<details>
+<summary>Skripta - Irmel Haskić</summary>
+
 ``` bash
 #!/bin/bash
 
@@ -124,10 +125,11 @@ fi
 
 source "$HOME/.bashrc"
 ```
+</details>
 
 Skripta radi ok, ali ima problema kada se `cloonix_net` pokreće pomoću skripti (npr. [routing.sh](./Vjezbe/v3/routing.sh)).
 
-Slijedi rješenje koje sam smislio, a ako nekog zanima, nakon rješenja je objašnjenje zašto prvobitna skripta ne radi i kako i zašto radi novo rješenje.
+Slijedi **novije rješenje** koje sam smislio, a ako nekog zanima, nakon rješenja je objašnjenje zašto prvobitna skripta ne radi i kako i zašto radi novo rješenje.
 
 Napisao sam skriptu [`setup_cloonix_conf.sh`](./setup_cloonix_conf.sh) koja radi sve što treba za novo rješenje.
 Unutar skripte možete promijeniti naziv i path do fajla u koji želite pisati konfiguraciju.
