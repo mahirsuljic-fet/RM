@@ -92,7 +92,6 @@ open_sniffers ()
 *Dodatna napomena*: \
 Ako želite očistiti Wireshark output možete isključiti pa ponovo uključiti sniffer i ponovo upaliti Wireshark.
 
----
 </details>
 
 
@@ -166,7 +165,6 @@ urxvt.background: rgba:0000/0000/2222/cccc
 Prvi dio je ponovo za crvenu boju, drugi za zelenu, treći za plavu i četvrti dio predstavlja providnost gdje je `0000` skroz providno, a `ffff` nikako providno.
 Potrebno je također dodati `depth` parametar.
 
----
 </details>
 
 <details>
@@ -188,10 +186,8 @@ Dakle, ako unutar `/home/$USER/.local/bin` (naše putanje) napravimo executable 
 on će se izvrsiti prije "običnog" `cloonix_net`-a koji se nalazi u `/usr/local/bin/` jer se ta putanja nalazi posle naše u `$PATH`. 
 Tako da možemo upravo to i uraditi tako što napravimo novi fajl `cloonix_net` u našoj putanji i dadnemo mu executable permisije pomoću `chmod` (ne radi bez permisija).
 
----
 </details>
 
----
 </details>
 
 <details>
@@ -200,7 +196,6 @@ Tako da možemo upravo to i uraditi tako što napravimo novi fajl `cloonix_net` 
 
 Prije pokretanja Docker okruženja (`sudo start_container`) potrebno je izvršiti komandu `xhost local:$USER`.
 
----
 </details>
 
 
@@ -228,5 +223,4 @@ sudo rm -rf /var/lib/cloonix
 **Napomena** \
 Koristiti default virtuelnu mašinu (*bookworm*).
 
----
 </details>
