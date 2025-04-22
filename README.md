@@ -135,7 +135,7 @@ Skripta radi ok, ali ima problema kada se `cloonix_net` pokreće pomoću skripti
 Slijedi novije rješenje koje sam smislio, a ako nekog zanima, nakon rješenja je objašnjenje zašto prvobitna skripta ne radi i kako i zašto radi novo rješenje.
 
 ***Još jednom napominjem, nije potrebna nikakva skripta, ovo sam ostavio jer sam već ispisao i žao mi je izbrisati :)*** \
-***Sve što je potrebno je da se ispod objašnjena konfiguracija upiše u `~/.Xdefaults`.***
+***Sve što je potrebno je da se konfiguracija objašnjena u dijelu "Novije rješenje" upiše u `~/.Xdefaults`.***
 
 Napisao sam skriptu [`setup_cloonix_conf.sh`](./setup_cloonix_conf.sh) koja radi sve što treba za novo rješenje.
 Unutar skripte možete promijeniti naziv i path do fajla u koji želite pisati konfiguraciju.
