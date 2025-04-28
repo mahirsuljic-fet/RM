@@ -18,4 +18,5 @@ kako ne bi morali ručno svaki put sve spajati i konfigurisati.
 | [2](./v2/v2.md) | ARP, Wireshark, `ping` (ICMP) i ARP cache (`ip neighbour`)
 | [3](./v3/v3.md) | Routing, `ip route`, otvoranje više Wireshark-a i skripte.
 | [4](./v4/v4.md) | `traceroute`, `hping3`, MTU (citanje i modifikacija uz pomoc `ip` utility-a), fragmentacija
-| [5](./v5/v5.md) | DHCP (konfiguacija i koristenje)
+| [5](./v5/v5.md) | DHCP
+| [6](./v6/v6.md) | DNS
