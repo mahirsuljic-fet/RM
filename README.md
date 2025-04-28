@@ -99,14 +99,49 @@ Ako želite očistiti Wireshark output možete isključiti pa ponovo uključiti 
 <details>
 <summary><h2>Konfiguracija Cloonix KVM terminala</h2></summary>
 
-Ispostavilo se da ništa od ovog ispod nije potrebno, ali ću ostaviti ako nekog bude zanimalo ili najnovije rješenje ne bude radilo.
-Sve što treba je da se napravi fajl `.Xdefaults` u `$HOME` (tj. `~/.Xdefaults`) i unutar njega upiše konfiguracija terminala.
-U dijelu *Novije rješenje* je objašnjena konfiguracija terminala.
+Potrebno je da se napravi fajl `.Xdefaults` u `$HOME` (tj. `~/.Xdefaults`) i unutar njega upiše konfiguracija terminala.
 
-
-Kolega **Irmel Haskić** je našao način da se poveća font u terminalu od KVM uređaja i napisao sljedeću skriptu:
 <details>
-<summary><h4>Skripta - Irmel Haskić</h4></summary>
+<summary><h3>Konfiguracija terminala</h3></summary>
+
+Osnovna konfiguracija:
+```
+urxvt.font: xft:Monospace:size=12
+urxvt.foreground: #eeeeee
+urxvt.background: #222222
+```
+
+Font se mijenja u formatu `xft:IME_FONTA:size=VELICINA`.
+Ako želite neki drugi font, možete unutar KVM terminala izvrsiti komandu `fc-list` koja će ispisati instalirane fontove.
+`foreground` je boja slova, a `background` je boja pozadine, u hex RGB formatu 
+(prve dvije hex cifre su nivo crvene boje, druge dvije nivo zelene i zadnje dvije nivo plave boje).
+
+Možete također napraviti providnu pozadinu pomoću rgba (red-green-blue-alpha) formata kao:
+```
+urxvt.font: xft:Monospace:size=12
+urxvt.foreground: #eeeeee
+urxvt.depth: 32
+urxvt.background: rgba:0000/0000/2222/cccc
+```
+
+Prvi dio je ponovo za crvenu boju, drugi za zelenu, treći za plavu i četvrti dio predstavlja providnost gdje je `0000` skroz providno, a `ffff` nikako providno.
+Potrebno je također dodati `depth` parametar.
+
+Još dokumentacije za konfiguraciju:
+- [Arch wiki](https://wiki.archlinux.org/title/Rxvt-unicode#Configuration)
+- [Addy's Blog](https://addy-dclxvi.github.io/post/configuring-urxvt/#configurations)
+
+</details>
+
+<details>
+<summary><h3>Alternativno rješenje</h3></summary>
+
+**Napomena:** \
+Najjednostavnije rješenje je pomoću fajla `.Xdefaults`, ovo ostalo sam ostavio ovdje za slučaj da to rješenje ne radi.
+
+Prvobitno je kolega *Irmel Haskić* našao način da se poveća font u terminalu od KVM uređaja i napisao sljedeću skriptu:
+<details>
+<summary><h4>Prvobitna skripta</h4></summary>
 
 ``` bash
 #!/bin/bash
@@ -128,20 +163,20 @@ fi
 
 source "$HOME/.bashrc"
 ```
+
 </details>
 
 Skripta radi ok, ali ima problema kada se `cloonix_net` pokreće pomoću skripti (npr. [routing.sh](./Vjezbe/v3/routing.sh)).
+Slijedi novije rješenje koje sam smislio, a ako nekog zanima, nakon rješenja je objašnjenje zašto prvobitna skripta ne radi i kako radi novo rješenje.
 
-Slijedi novije rješenje koje sam smislio, a ako nekog zanima, nakon rješenja je objašnjenje zašto prvobitna skripta ne radi i kako i zašto radi novo rješenje.
+Napisao sam skriptu [`setup_cloonix_conf.sh`](./setup_cloonix_conf.sh) koja radi sve što treba za novo rješenje, samo je potrebno je pokrenuti.
 
-***Još jednom napominjem, nije potrebna nikakva skripta, ovo sam ostavio jer sam već ispisao i žao mi je izbrisati :)*** \
-***Sve što je potrebno je da se konfiguracija objašnjena u dijelu "Novije rješenje" upiše u `~/.Xdefaults`.***
-
-Napisao sam skriptu [`setup_cloonix_conf.sh`](./setup_cloonix_conf.sh) koja radi sve što treba za novo rješenje.
+Ako se neko odluči koristiti ovo rješenje i mijenjati konfiguraciju, 
+potrebno je konfiguraciju pisati (po default-u) u fajl `~/.cloonix_conf` (novo-kreirani skriveni fajl u home direktoriji od korisnika).
 Unutar skripte možete promijeniti naziv i path do fajla u koji želite pisati konfiguraciju.
 
 <details>
-<summary><h3>Novije rješenje</h3></summary>
+<summary><h3>Opis novijeg rješenja</h3></summary>
 
 Ovo rješenje čita konfiguracijske podatke iz fajla `~/.cloonix_conf`.
 Potrebno je ove dvije linije koda unutar funkcije `cloonix_net` iz orginalne skripte upisati u fajl `~/.local/bin/cloonix_net` uz neke izmjene:
@@ -150,36 +185,6 @@ xrdb -merge $HOME/.cloonix_conf
 . /usr/local/bin/cloonix_net "$@"
 ```
 Ovom fajlu je potrebno dati executable permisije pomoću `chmox +x ~/.local/bin/cloonix_net`.
-
-***BITNI DIO ZA `~/.Xdefaults`:***
-
-Unutar fajla `.cloonix_conf` (odnosno `~/.Xdefaults`) je potrebno dodati konfiguracijske podatke kao npr.:
-```
-urxvt.font: xft:Monospace:size=14
-urxvt.foreground: #eeeeee
-urxvt.background: #222222
-```
-
-Font se mijenja u formatu `xft:IME_FONTA:size=VELICINA`.
-Ako želite neki drugi font, možete unutar KVM terminala izvrsiti komandu `fc-list` koja će ispisati instalirane fontove.
-`foreground` je boja slova, a `background` je boja pozadine, u hex RGB formatu 
-(prve dvije hex cifre su nivo crvene boje, druge dvije nivo zelene i zadnje dvije nivo plave boje).
-
-Možete također napraviti providnu pozadinu pomoću rgba (red-green-blue-alpha) formata kao:
-```
-urxvt.font: xft:Monospace:size=14
-urxvt.foreground: #eeeeee
-urxvt.depth: 32
-urxvt.background: rgba:0000/0000/2222/cccc
-```
-
-Prvi dio je ponovo za crvenu boju, drugi za zelenu, treći za plavu i četvrti dio predstavlja providnost gdje je `0000` skroz providno, a `ffff` nikako providno.
-Potrebno je također dodati `depth` parametar.
-
-</details>
-
-<details>
-<summary><h3>Opis novijeg rješenja</h3></summary>
 
 Prvobitno rješenje ne radi zato jer bash skripte ne vide funkcije definisane u `~/.bashrc`.
 Ovo se naivno može riješiti na dva načina.
@@ -196,6 +201,11 @@ Ova putanja je lokalna (dio korisnikovih fajlova, ne utiče na cijeli sistem), u
 Dakle, ako unutar `/home/$USER/.local/bin` (naše putanje) napravimo executable fajl sa imenom `cloonix_net`, 
 on će se izvrsiti prije "običnog" `cloonix_net`-a koji se nalazi u `/usr/local/bin/` jer se ta putanja nalazi posle naše u `$PATH`. 
 Tako da možemo upravo to i uraditi tako što napravimo novi fajl `cloonix_net` u našoj putanji i dadnemo mu executable permisije pomoću `chmod` (ne radi bez permisija).
+
+Skripta takodjer provjerava da li je `$HOME/.local/bin` dio `$PATH`-a,
+ako nije onda u `.bashrc` dodaje `if` izraz koji ga dodaje u `$PATH` ako nije vec dodan.
+
+</details>
 
 </details>
 
