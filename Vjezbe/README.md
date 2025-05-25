@@ -20,3 +20,4 @@ kako ne bi morali ručno svaki put sve spajati i konfigurisati.
 | [4](./v4/v4.md) | `traceroute`, `hping3`, MTU (citanje i modifikacija uz pomoc `ip` utility-a), fragmentacija
 | [5](./v5/v5.md) | DHCP
 | [6](./v6/v6.md) | DNS
+| [7](./v7/v7.md) | Firewall (`iptables` i `netcat`)
