@@ -1,0 +1,3 @@
+nc -l -p 10000 | while true; do read -N 10000 var; echo $var; sleep 5; done
+
+cat /dev/urandom | base64 | nc IP 10000
