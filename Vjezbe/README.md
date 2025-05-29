@@ -12,12 +12,15 @@ Pored `.md` fajlova i skripti, unutar nekih direktorija se također nalaze fajlo
 Npr. u [`v3`](./v3/) se nalazi skripta [`routing.sh`](./v3/routing.sh) koja napravi osnovnu topologiju potrebnu za vježbu,
 kako ne bi morali ručno svaki put sve spajati i konfigurisati.
 
-| Br.             | Opis
-| --------------- | -------------------------------------------------------------------------------------------
-| [1](./v1/v1.md) | Upoznavanje sa Cloonix-om i `ip` utility-em (`ip address` i `ip link`)
-| [2](./v2/v2.md) | ARP, Wireshark, `ping` (ICMP) i ARP cache (`ip neighbour`)
-| [3](./v3/v3.md) | Routing, `ip route`, otvoranje više Wireshark-a i skripte.
-| [4](./v4/v4.md) | `traceroute`, `hping3`, MTU (citanje i modifikacija uz pomoc `ip` utility-a), fragmentacija
-| [5](./v5/v5.md) | DHCP
-| [6](./v6/v6.md) | DNS
-| [7](./v7/v7.md) | Firewall (`iptables` i `netcat`)
+| Br.                | Opis
+| ------------------ | -------------------------------------------------------------------------------------------
+|  [1](./v1/v1.md)   | Upoznavanje sa Cloonix-om i `ip` utility-em (`ip address` i `ip link`)
+|  [2](./v2/v2.md)   | ARP, Wireshark, `ping` (ICMP) i ARP cache (`ip neighbour`)
+|  [3](./v3/v3.md)   | Routing, `ip route`, otvoranje više Wireshark-a i skripte.
+|  [4](./v4/v4.md)   | `traceroute`, `hping3`, MTU (citanje i modifikacija uz pomoc `ip` utility-a), fragmentacija
+|  [5](./v5/v5.md)   | DHCP
+|  [6](./v6/v6.md)   | DNS
+|  [7](./v7/v7.md)   | Stateless firewall (`iptables` i `netcat`)
+|  [8](./v8/v8.md)   | Stateful firewall
+|  [9](./v9/v9.md)   | IPv6
+| [10](./v10/v10.md) | TCP
