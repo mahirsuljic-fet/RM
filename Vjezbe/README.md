@@ -21,6 +21,6 @@ kako ne bi morali ručno svaki put sve spajati i konfigurisati.
 |  [5](./v5/v5.md)   | DHCP
 |  [6](./v6/v6.md)   | DNS
 |  [7](./v7/v7.md)   | Stateless firewall (`iptables` i `netcat`)
-|  [8](./v8/v8.md)   | Stateful firewall
+|  [8](./v8/v8.md)   | Stateful firewall i NAT
 |  [9](./v9/v9.md)   | IPv6
 | [10](./v10/v10.md) | TCP
