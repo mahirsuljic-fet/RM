@@ -9,9 +9,9 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-const size_t BUFF_SIZE = 30;
-const char* SERVER_ADDR = "127.0.0.1";
-const uint16_t SERVER_PORT = 1234;
+static const size_t BUFF_SIZE = 300;
+static const char* SERVER_ADDR = "127.0.0.1";
+static uint16_t SERVER_PORT;
 
 void fail(const char* str)
 {
@@ -21,11 +21,16 @@ void fail(const char* str)
 
 int main(int argc, char* argv[])
 {
-  // Kreiramo socket
   int sock_fd = socket(AF_INET, SOCK_STREAM, 0);
 
   if (sock_fd < 0)
     fail("Socket creation failed");
+
+  // Zatrazi port od korisnika
+  // Ovo je dodano kako bi isti ovaj klijent mogao se spojiti i na HTTP server
+  std::cout << "Input server port: ";
+  std::cin >> SERVER_PORT;
+  std::cin.ignore();
 
   sockaddr_in server_addr;
 
@@ -37,22 +42,24 @@ int main(int argc, char* argv[])
   if (connect(sock_fd, reinterpret_cast<sockaddr*>(&server_addr), sizeof(server_addr)) < 0)
     fail("Failed to connect to server");
 
-  std::string msg;
-
   while (true)
   {
+    std::string msg;
+
     std::cout << "Write message: ";
-    if (!(std::cin >> msg))
-      break;
+    std::getline(std::cin, msg);
 
     send(sock_fd, msg.data(), msg.size(), 0);
 
+    std::cout << "Message sent\n";
+
     std::string recv_msg(BUFF_SIZE, '\0');
 
+    // Ako read vrati 0 to znaci da je konekcija prekinuta i treba zatvoriti socket
     if (read(sock_fd, recv_msg.data(), recv_msg.size()) == 0)
       break;
 
-    std::cout << "Response:      ";
+    std::cout << "Response: ";
     std::cout << recv_msg << "\n\n";
   }
 
