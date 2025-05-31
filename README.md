@@ -39,6 +39,8 @@ Također su dodane skripte koje u Cloonix-u naprave mrežu kakva treba biti kada
 - [How DNS Works - Computerphile](https://www.youtube.com/watch?v=uOfonONtIuk)
 - [What is DNS?](https://www.youtube.com/watch?v=NiQTs9DbtW4)
 
+### [TCP](https://www.youtube.com/watch?v=rmFX1V49K8U&list=PLW8bTPfXNGdAZIKv-y9v_XLXtEqrPtntm)
+
 </details>
 
 
