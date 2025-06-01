@@ -2,6 +2,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <netinet/in.h>
@@ -10,36 +11,44 @@
 #include <strings.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <vector>
 
 static const std::size_t MAX_CONNECTIONS = 5;
-static const std::size_t BUFF_SIZE = 100;
+static const std::size_t BUFF_SIZE = 512;
 static const uint16_t SERVER_PORT = 8080;
-static const char* const SERVER_PATH = "index.html";
-
-static const char* const HTTP_OK = "HTTP/1.1 200 OK";
-static const char* const HTTP_NOTFOUND = "HTTP/1.1 404 Not Found";
-static const char* const HTTP_NOTALLOWED = "HTTP/1.1 405 Method Not Allowed";
-
+static const char* const WEBSITE_PATH = "index.html";
 static std::string website;
+
+namespace HTTP
+{
+using Code = const char* const;
+
+namespace Success
+{
+  static Code OK = "HTTP/1.1 200 OK";
+}
+
+namespace ClientError
+{
+  static Code BAD_REQUEST = "HTTP/1.1 400 Bad Request";
+  static Code NOT_FOUND = "HTTP/1.1 404 Not Found";
+  static Code NOT_ALLOWED = "HTTP/1.1 405 Method Not Allowed";
+}
+
+namespace ServerError
+{
+  static Code VERSION_NOT_SUPPORTED = "HTTP/1.1 505 HTTP Version Not Supported";
+}
+}
+
+std::string get_file(const std::string& path);
+std::string get_response(const std::string& request);
+std::vector<std::string> split(const std::string& str, const char delimiter);
 
 void fail(const char* str)
 {
   perror(str);
   exit(-1);
-}
-
-void load_website()
-{
-  std::ifstream file(SERVER_PATH);
-  std::stringstream sstream;
-  std::string line;
-
-  while (std::getline(file, line))
-    sstream << line << "\n";
-
-  website = sstream.str();
-
-  file.close();
 }
 
 int main(int argc, char* argv[])
@@ -62,7 +71,7 @@ int main(int argc, char* argv[])
 
   std::cout << "Socket bound\n";
 
-  load_website();
+  website = get_file(WEBSITE_PATH);
 
   std::cout << "Website loaded\n";
 
@@ -103,29 +112,7 @@ int main(int argc, char* argv[])
       std::cout << "\nRequest received:\n"
                 << request << std::endl;
 
-      if (request.find("GET") == request.npos)
-      {
-        response = HTTP_NOTALLOWED;
-      }
-      else if (request.find("/") != request.npos
-        || request.find("/index.html") != request.npos
-        || request.find("index.html") != request.npos)
-      {
-
-        std::stringstream sstream;
-
-        sstream << HTTP_OK << "\n";
-        sstream << "Content-Length: " << website.length() << "\n";
-        sstream << "Content-Type: text/html" << "\n";
-        sstream << "\n";
-        sstream << website;
-
-        response = sstream.str();
-      }
-      else
-      {
-        response = HTTP_NOTFOUND;
-      }
+      response = get_response(request);
 
       if (send(client_sock_fd, response.data(), response.length(), 0) < 0)
       {
@@ -144,4 +131,80 @@ int main(int argc, char* argv[])
   close(server_sock_fd);
 
   return 0;
+}
+
+std::string get_response(const std::string& request)
+{
+  std::vector<std::string> request_parts = split(request, ' ');
+
+  if (request_parts.size() < 3)
+    return HTTP::ClientError::BAD_REQUEST;
+
+  std::string method = request_parts[0];
+  std::string path = request_parts[1];
+  std::string version = request_parts[2];
+
+  if (method != "GET")
+    return HTTP::ClientError::NOT_ALLOWED;
+
+  if (version.find("HTTP/1") == version.npos)
+    return HTTP::ServerError::VERSION_NOT_SUPPORTED;
+
+  std::string response_data;
+
+  if (path == "/" || path == WEBSITE_PATH)
+    response_data = website;
+  else
+    response_data = get_file(path);
+
+  if (response_data.empty())
+    return HTTP::ClientError::NOT_FOUND;
+
+  std::string content_type = (path == "/" || path.rfind(".htm") != path.npos) ? "text/html" : "text/plain";
+  std::stringstream sstream;
+
+  sstream << HTTP::Success::OK << "\n";
+  sstream << "Content-Length: " << response_data.length() << "\n";
+  sstream << "Content-Type: " << content_type << "\n";
+  sstream << "\n";
+  sstream << response_data;
+
+  return sstream.str();
+}
+
+std::vector<std::string> split(const std::string& str, const char delimiter)
+{
+  std::vector<std::string> result;
+  std::stringstream sstream(str);
+  std::string part;
+
+  while (std::getline(sstream, part, delimiter))
+    result.push_back(part);
+
+  return result;
+}
+
+std::string get_file(const std::string& path)
+{
+  const char* cpath = path.c_str();
+
+  if (path.size() < 1)
+    return "";
+
+  if (path[0] == '/')
+    cpath = &path[1];
+
+  if (!std::filesystem::exists(cpath))
+    return "";
+
+  std::ifstream file(cpath);
+  std::stringstream sstream;
+  std::string line;
+
+  while (std::getline(file, line))
+    sstream << line << "\r\n";
+
+  file.close();
+
+  return sstream.str();
 }
