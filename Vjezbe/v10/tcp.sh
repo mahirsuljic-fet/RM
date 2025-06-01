@@ -110,9 +110,8 @@ cloonix_ssh nemo router2 "sysctl net.ipv4.ip_forward=1"
 cloonix_ssh nemo router1 "ip route add 192.168.0.0/24 via 10.1.0.2"
 cloonix_ssh nemo router2 "ip route add 10.0.0.0/16 via 10.1.0.1"
 
-
 IP_TABLES=$(cat <<-END
-iptables -A FORWARD -p tcp -m tcp –tcp-flags SYN,RST SYN -j TCPMSS –clamp-mss-to-pmtu
+iptables -A FORWARD -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
 END
 )
 
