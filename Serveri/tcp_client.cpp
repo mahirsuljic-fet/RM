@@ -11,7 +11,7 @@
 
 static const size_t BUFF_SIZE = 300;
 static const char* SERVER_ADDR = "127.0.0.1";
-static uint16_t SERVER_PORT;
+static uint16_t SERVER_PORT = 1234;
 
 void fail(const char* str)
 {
@@ -25,12 +25,6 @@ int main(int argc, char* argv[])
 
   if (sock_fd < 0)
     fail("Socket creation failed");
-
-  // Zatrazi port od korisnika
-  // Ovo je dodano kako bi isti ovaj klijent mogao se spojiti i na HTTP server
-  std::cout << "Input server port: ";
-  std::cin >> SERVER_PORT;
-  std::cin.ignore();
 
   sockaddr_in server_addr;
 
