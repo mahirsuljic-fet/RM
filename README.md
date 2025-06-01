@@ -28,7 +28,10 @@ Profesorove prezentacije iz predmeta.
 
 ### [Vježbe](./Vjezbe)
 Primjeri i fajlovi sa vježbi.
-Također su dodane skripte koje u Cloonix-u naprave mrežu kakva treba biti kada se vježba pravilno odradi.
+Također su za većinu vježbi dodane skripte koje u Cloonix-u naprave mrežu kakva treba biti kada se vježba pravilno odradi.
+
+Dodatno, za neke koncepte (posebno u kasnijim vježbama) sam detaljnije pisao objašnjenja i dodavao neke primjere i opise koje nismo radili na vježbama.
+Zbog toga su neki `md` fajlovi poprilično dugi, kao npr. za [IPv6](./Vjezbe/v9/v9.md).
 
 ### [Serveri](./Serveri)
 Implementacije jednostavnih UDP, TCP i HTTP servera i klijenata.
