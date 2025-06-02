@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
 
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(SERVER_PORT);
-  server_addr.sin_addr.s_addr = INADDR_ANY;
+  server_addr.sin_addr.s_addr = INADDR_ANY; // moze se izostaviti htonl jer je IP adresa 0.0.0.0 ista i u big endian i u little endian
 
   if (bind(server_sock_fd, reinterpret_cast<sockaddr*>(&server_addr), sizeof(server_addr)) < 0)
     fail("Failed to bind server socket");
